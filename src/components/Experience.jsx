@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import * as THREE from "three";
-import { OrbitControls, Stage } from "@react-three/drei";
+import { Html, OrbitControls, Stage } from "@react-three/drei";
 import { Vector3 } from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useGLTF, SpotLight, useDepthBuffer } from "@react-three/drei";
@@ -53,7 +53,6 @@ const Experience = (props) => {
 
   return (
     <Canvas
-      shadows
       dpr={[1, 2]}
       camera={{ position: [0, 2, 7], fov: 50, near: 1, far: 20 }}
     >
@@ -65,6 +64,7 @@ const Experience = (props) => {
 
       <ambientLight intensity={0.095} />
       <Scene x1={x1} y1={y1} z1={z1} x2={x2} y2={y2} z2={z2} />
+      <Html as="div" position={[0, 0, 0]} />
       <axesHelper args={[1]} />
     </Canvas>
   );
@@ -87,12 +87,14 @@ function Scene({ x1, y1, z1, x2, y2, z2 }) {
     <>
       <MovingSpot
         depthBuffer={depthBuffer}
-        color="#000077"
+        // color="#000077"
+        color="#00b2d2"
         position={[x1, y1, z1]}
       />
       <MovingSpot
         depthBuffer={depthBuffer}
-        color="#6A2ECD"
+        // color="#6A2ECD"
+        color="#00b2d2"
         position={[x2, y2, z2]}
       />
       {/* <mesh
@@ -103,7 +105,7 @@ function Scene({ x1, y1, z1, x2, y2, z2 }) {
         material={materials["Default OBJ.001"]}
         dispose={null}
       /> */}
-      <primitive receiveShadow castShadow object={scene} />
+      <primitive receiveShadow castShadow object={scene} color={"white"} />
       <mesh receiveShadow position={[0, 0, 0]} rotation-x={-Math.PI / 2}>
         <planeGeometry args={[50, 50]} />
         <meshStandardMaterial color={"#eeeeee"} />

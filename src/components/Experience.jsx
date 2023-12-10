@@ -1,10 +1,19 @@
 import React, { useRef } from "react";
 import * as THREE from "three";
-import { Html, OrbitControls, Stage } from "@react-three/drei";
+import {
+  Billboard,
+  Center,
+  GradientTexture,
+  Html,
+  OrbitControls,
+  Stage,
+  Text3D,
+} from "@react-three/drei";
 import { Vector3 } from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useGLTF, SpotLight, useDepthBuffer } from "@react-three/drei";
 import { useControls } from "leva";
+import StaticWebsite from "./StaticWebsite";
 
 // setup Experience component
 
@@ -62,10 +71,41 @@ const Experience = (props) => {
       {/* <fog attach="fog" args={["#202020", 5, 20]} /> */}
       <fog attach="fog" args={["black", 5, 20]} />
 
-      <ambientLight intensity={0.095} />
+      <ambientLight intensity={1} />
+      {/* <ambientLight intensity={0.095} /> */}
+
       <Scene x1={x1} y1={y1} z1={z1} x2={x2} y2={y2} z2={z2} />
-      <Html as="div" position={[0, 0, 0]} />
+      {/* <Html as="div" position={[0, 0, 0]} /> */}
+      <Billboard position={[-5, 2, 0]}>
+        <Text3D font={"/Roboto_Regular.json"} size={0.25}>
+          Weston Bushyeager
+          <meshStandardMaterial>
+            <GradientTexture
+              stops={[0, 1]} // As many stops as you want
+              colors={["aquamarine", "hotpink"]} // Colors need to match the number of stops
+              size={1024} // Size is optional, default = 1024
+            />
+          </meshStandardMaterial>
+        </Text3D>
+      </Billboard>
+      <Billboard position={[-5, 1.5, 0]}>
+        <Text3D font={"/Roboto_Regular.json"} size={0.15}>
+          Software Engineer
+          <meshStandardMaterial>
+            <GradientTexture
+              stops={[0, 1]} // As many stops as you want
+              colors={["aquamarine", "hotpink"]} // Colors need to match the number of stops
+              size={1024} // Size is optional, default = 1024
+            />
+          </meshStandardMaterial>
+        </Text3D>
+      </Billboard>
+      <Html position={[-5, -0.5, 0]} scale={100}>
+        <StaticWebsite />
+      </Html>
+
       <axesHelper args={[1]} />
+      {/* <OrbitControls /> */}
     </Canvas>
   );
 };
@@ -97,16 +137,8 @@ function Scene({ x1, y1, z1, x2, y2, z2 }) {
         color="#00b2d2"
         position={[x2, y2, z2]}
       />
-      {/* <mesh
-        position={[0, -1.03, 0]}
-        castShadow
-        receiveShadow
-        geometry={nodes.dragon.geometry}
-        material={materials["Default OBJ.001"]}
-        dispose={null}
-      /> */}
-      <primitive receiveShadow castShadow object={scene} color={"white"} />
-      <mesh receiveShadow position={[0, 0, 0]} rotation-x={-Math.PI / 2}>
+      <primitive object={scene} color={"white"} />
+      <mesh position={[0, 0, 0]} rotation-x={-Math.PI / 2}>
         <planeGeometry args={[50, 50]} />
         <meshStandardMaterial color={"#eeeeee"} />
       </mesh>
@@ -130,7 +162,6 @@ function MovingSpot({ vec = new Vector3(), ...props }) {
   });
   return (
     <SpotLight
-      castShadow
       ref={light}
       penumbra={1}
       distance={6}

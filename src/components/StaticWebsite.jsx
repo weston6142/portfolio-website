@@ -43,6 +43,8 @@ const ExperienceCardSkills = styled.div``;
 
 const ExperienceCardSkill = styled.div``;
 
+const MainLink = styled.div``;
+
 const StaticWebsite = () => {
   return (
     <MainDiv>
@@ -57,6 +59,54 @@ const StaticWebsite = () => {
       </LeftDiv>
       <RightDiv>
         <BioSection>This is a long bio.</BioSection>
+        <ExperienceSection>
+          <ExperienceCard>
+            <ExperienceCardDates>2019 - 2021</ExperienceCardDates>
+            <ExperienceCardTitle>Software Engineer</ExperienceCardTitle>
+            <ExperienceCardDescription>
+              This is a short description.
+            </ExperienceCardDescription>
+            <ExperienceCardLinks>
+              <ExperienceCardLink>Link 1</ExperienceCardLink>
+              <ExperienceCardLink>Link 2</ExperienceCardLink>
+            </ExperienceCardLinks>
+            <ExperienceCardSkills>
+              <ExperienceCardSkill>Skill 1</ExperienceCardSkill>
+              <ExperienceCardSkill>Skill 2</ExperienceCardSkill>
+            </ExperienceCardSkills>
+          </ExperienceCard>
+          <ExperienceCard>
+            <ExperienceCardDates>2019 - 2021</ExperienceCardDates>
+            <ExperienceCardTitle>Software Engineer</ExperienceCardTitle>
+            <ExperienceCardDescription>
+              This is a short description.
+            </ExperienceCardDescription>
+            <ExperienceCardLinks>
+              <ExperienceCardLink>Link 1</ExperienceCardLink>
+              <ExperienceCardLink>Link 2</ExperienceCardLink>
+            </ExperienceCardLinks>
+            <ExperienceCardSkills>
+              <ExperienceCardSkill>Skill 1</ExperienceCardSkill>
+              <ExperienceCardSkill>Skill 2</ExperienceCardSkill>
+            </ExperienceCardSkills>
+          </ExperienceCard>
+          <ExperienceCard>
+            <ExperienceCardDates>2019 - 2021</ExperienceCardDates>
+            <ExperienceCardTitle>Software Engineer</ExperienceCardTitle>
+            <ExperienceCardDescription>
+              This is a short description.
+            </ExperienceCardDescription>
+            <ExperienceCardLinks>
+              <ExperienceCardLink>Link 1</ExperienceCardLink>
+              <ExperienceCardLink>Link 2</ExperienceCardLink>
+            </ExperienceCardLinks>
+            <ExperienceCardSkills>
+              <ExperienceCardSkill>Skill 1</ExperienceCardSkill>
+              <ExperienceCardSkill>Skill 2</ExperienceCardSkill>
+            </ExperienceCardSkills>
+          </ExperienceCard>
+        </ExperienceSection>
+        <MainLink>Resume Link</MainLink>
       </RightDiv>
     </MainDiv>
   );

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 import {
   Billboard,
@@ -16,6 +16,71 @@ import { useControls } from "leva";
 import StaticWebsite from "./StaticWebsite";
 
 // setup Experience component
+
+const ScrollControl = () => {
+  const { camera } = useThree();
+  const minY = -4; // Define minimum Z value
+  const maxY = 2; // Define maximum Z value
+  const moveAmount = 0.002; // Adjust move sensitivity
+
+  // Touch state reference
+  const touchState = useRef({
+    isTouching: false,
+    startTouchY: 0,
+    endTouchY: 0,
+  });
+
+  // Handler for mouse wheel scroll
+  const handleWheel = (event) => {
+    const delta = event.deltaY * moveAmount;
+    camera.position.y = Math.max(
+      minY,
+      Math.min(camera.position.y + delta, maxY)
+    );
+  };
+
+  // Handlers for touch events
+  const handleTouchStart = (event) => {
+    touchState.current.isTouching = true;
+    touchState.current.startTouchY = event.touches[0].clientY;
+  };
+
+  const handleTouchMove = (event) => {
+    if (!touchState.current.isTouching) return;
+    touchState.current.endTouchY = event.touches[0].clientY;
+    const delta =
+      (touchState.current.startTouchY - touchState.current.endTouchY) *
+      moveAmount;
+    camera.position.y = Math.max(
+      minY,
+      Math.min(camera.position.y + delta, maxY)
+    );
+  };
+
+  const handleTouchEnd = () => {
+    touchState.current.isTouching = false;
+  };
+
+  useEffect(() => {
+    console.log(camera);
+    // Add event listeners
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: false });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd);
+
+    // Clean up event listeners on unmount
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+    // Ensure effect runs once on mount and cleanup on unmount
+  }, []);
+
+  return null;
+};
 
 const Experience = (props) => {
   const { x1, y1, z1 } = useControls({
@@ -106,6 +171,7 @@ const Experience = (props) => {
 
       <axesHelper args={[1]} />
       {/* <OrbitControls /> */}
+      <ScrollControl />
     </Canvas>
   );
 };

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const MainDiv = styled.div`
   width: 80vw;
@@ -74,11 +74,20 @@ const ExperienceCardDates = styled.div`
   color: #a0aec0;
 `;
 
-const ExperienceCardTitle = styled.div`
+const ExperienceCardTitleDiv = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;
+
+const ExperienceCardTitleText = styled.div`
   font-size: 1.1rem;
   font-weight: 600;
   color: ${(props) =>
     props.isHovered ? "#00b2d2" : props.isAnyHovered ? "white" : "white"};
+`;
+
+const ExperienceCardTitleIcon = styled.img`
+  width: 1rem;
 `;
 
 const ExperienceCardDescription = styled.div`
@@ -147,6 +156,21 @@ const ShortBioText = styled.div`
 //TODO: need to add arrow and dot to title
 const StaticWebsite = () => {
   const [hoverIndex, setHoverIndex] = useState(-1);
+  const [strokeColor, setStrokeColor] = useState("white");
+
+  // add useEffect to change stroke color on hoverIndex change
+
+  useEffect(() => {
+    if (hoverIndex === 0) {
+      setStrokeColor("#00b2d2");
+    } else if (hoverIndex === 1) {
+      setStrokeColor("#00b2d2");
+    } else if (hoverIndex === 2) {
+      setStrokeColor("#00b2d2");
+    } else {
+      setStrokeColor("white");
+    }
+  }, [hoverIndex]);
 
   return (
     <MainDiv>
@@ -193,12 +217,16 @@ const StaticWebsite = () => {
           >
             <ExperienceCardDates>01/2022 – Present</ExperienceCardDates>
             <ExperienceCardDiv>
-              <ExperienceCardTitle
-                isHovered={hoverIndex === 0}
-                isAnyHovered={hoverIndex !== -1}
-              >
-                Forward Deployed Software Engineer Gecko Robotics
-              </ExperienceCardTitle>
+              <ExperienceCardTitleDiv>
+                <ExperienceCardTitleText
+                  isHovered={hoverIndex === 0}
+                  isAnyHovered={hoverIndex !== -1}
+                >
+                  Deployed Software Engineer Gecko Robotics
+                </ExperienceCardTitleText>
+                <ExperienceCardTitleIcon src="arrow.svg" />
+              </ExperienceCardTitleDiv>
+
               <ExperienceCardDescription>
                 Within a dynamic team at Gecko Robotics, I crafted a bespoke
                 React application with a Python Flask backend that culminated in
@@ -243,12 +271,16 @@ const StaticWebsite = () => {
           >
             <ExperienceCardDates>03/2020 – 12/2022</ExperienceCardDates>
             <ExperienceCardDiv>
-              <ExperienceCardTitle
-                isHovered={hoverIndex === 1}
-                isAnyHovered={hoverIndex !== -1}
-              >
-                Field Engineer Gecko Robotics
-              </ExperienceCardTitle>
+              <ExperienceCardTitleDiv>
+                <ExperienceCardTitleText
+                  isHovered={hoverIndex === 1}
+                  isAnyHovered={hoverIndex !== -1}
+                >
+                  Field Engineer Gecko Robotics
+                </ExperienceCardTitleText>
+                <ExperienceCardTitleIcon src="arrow.svg" />
+              </ExperienceCardTitleDiv>
+
               <ExperienceCardDescription>
                 I innovated a laser profilometry surface scanning system,
                 integrating advanced components with custom PyQt software to
@@ -258,19 +290,10 @@ const StaticWebsite = () => {
                 formulated key SOP documents and automated field-issue reporting
                 using AWS Lambda within our cloud architecture.
               </ExperienceCardDescription>
-              <ExperienceCardLinks>
-                <ExperienceCardLink>
-                  <ExperienceCardLinkIcon src="link.svg" />
-                  <ExperienceCardLinkText>Link 1</ExperienceCardLinkText>
-                </ExperienceCardLink>
-                <ExperienceCardLink>
-                  <ExperienceCardLinkIcon src="link.svg" />
-                  <ExperienceCardLinkText>Link 2</ExperienceCardLinkText>
-                </ExperienceCardLink>
-              </ExperienceCardLinks>
               <ExperienceCardSkills>
-                <ExperienceCardSkill>Skill 1</ExperienceCardSkill>
-                <ExperienceCardSkill>Skill 2</ExperienceCardSkill>
+                <ExperienceCardSkill>Python</ExperienceCardSkill>
+                <ExperienceCardSkill>AWS</ExperienceCardSkill>
+                <ExperienceCardSkill>SolidWorks</ExperienceCardSkill>
               </ExperienceCardSkills>
             </ExperienceCardDiv>
           </ExperienceCard>
@@ -282,31 +305,25 @@ const StaticWebsite = () => {
           >
             <ExperienceCardDates>01/2019 – 03/2020</ExperienceCardDates>
             <ExperienceCardDiv>
-              <ExperienceCardTitle
-                isHovered={hoverIndex === 2}
-                isAnyHovered={hoverIndex !== -1}
-              >
-                Field Engineer Profrac Services
-              </ExperienceCardTitle>
+              <ExperienceCardTitleDiv>
+                <ExperienceCardTitleText
+                  isHovered={hoverIndex === 2}
+                  isAnyHovered={hoverIndex !== -1}
+                >
+                  Field Engineer Profrac Services
+                </ExperienceCardTitleText>
+                <ExperienceCardTitleIcon src="arrow.svg" />
+              </ExperienceCardTitleDiv>
+
               <ExperienceCardDescription>
                 At Profrac Services, my engineering acumen drove the seamless
                 completion of hydraulic fracturing services, amassing over $15
                 million in successful projects without any operational
                 interruptions as the lead on-site engineer.
               </ExperienceCardDescription>
-              <ExperienceCardLinks>
-                <ExperienceCardLink>
-                  <ExperienceCardLinkIcon src="link.svg" />
-                  <ExperienceCardLinkText>Link 1</ExperienceCardLinkText>
-                </ExperienceCardLink>
-                <ExperienceCardLink>
-                  <ExperienceCardLinkIcon src="link.svg" />
-                  <ExperienceCardLinkText>Link 2</ExperienceCardLinkText>
-                </ExperienceCardLink>
-              </ExperienceCardLinks>
               <ExperienceCardSkills>
-                <ExperienceCardSkill>Skill 1</ExperienceCardSkill>
-                <ExperienceCardSkill>Skill 2</ExperienceCardSkill>
+                <ExperienceCardSkill>Excel</ExperienceCardSkill>
+                <ExperienceCardSkill>Management</ExperienceCardSkill>
               </ExperienceCardSkills>
             </ExperienceCardDiv>
           </ExperienceCard>
@@ -317,9 +334,9 @@ const StaticWebsite = () => {
           <ExperienceCard>
             <ExperienceCardDates>Surefire Betting Image</ExperienceCardDates>
             <ExperienceCardDiv>
-              <ExperienceCardTitle>
+              <ExperienceCardTitleText>
                 Founder Surefire Betting
-              </ExperienceCardTitle>
+              </ExperienceCardTitleText>
               <ExperienceCardDescription>
                 Surefire betting description
               </ExperienceCardDescription>

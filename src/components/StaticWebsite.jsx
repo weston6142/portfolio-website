@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import { useState } from "react";
 
 const MainDiv = styled.div`
   width: 80vw;
-  height: 130vh;
+  height: 200vh;
   background: green;
   display: flex;
 `;
@@ -52,23 +53,64 @@ const ExperienceSection = styled.div``;
 
 const ExperienceCard = styled.div`
   display: flex;
+  padding: 1.5rem;
+  opacity: ${(props) => (props.isHovered ? 1 : props.isAnyHovered ? 0.5 : 1)};
+  background-color: ${(props) =>
+    props.isHovered ? "rgba(255, 255, 255, 0.04)" : "rgba(0,0,0,0)"};
+  border-radius: 1rem;
+  boxshadow ${(props) =>
+    props.isHovered ? "0px 0px 10px 0px rgba(0,0,0,0.75)" : "none"};
 `;
 
 const ExperienceCardDiv = styled.div`
   width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 const ExperienceCardDates = styled.div`
   width: 30%;
+  color: #a0aec0;
 `;
 
-const ExperienceCardTitle = styled.div``;
+const ExperienceCardTitle = styled.div`
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: ${(props) =>
+    props.isHovered ? "#00b2d2" : props.isAnyHovered ? "white" : "white"};
+`;
 
-const ExperienceCardDescription = styled.div``;
+const ExperienceCardDescription = styled.div`
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.001rem; // Adjust the value as needed
+  line-height: 1.25rem;
+  color: #a0aec0;
+`;
 
-const ExperienceCardLinks = styled.div``;
+const ExperienceCardLinks = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;
 
-const ExperienceCardLink = styled.div``;
+const ExperienceCardLink = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+`;
+
+const ExperienceCardLinkText = styled.a`
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  color: white;
+  text-decoration: none;
+`;
+
+const ExperienceCardLinkIcon = styled.img`
+  width: 1rem;
+`;
 
 const ExperienceCardSkills = styled.div`
   display: flex;
@@ -102,8 +144,10 @@ const ShortBioText = styled.div`
   font-size: 1rem;
   color: grey;
 `;
-
+//TODO: need to add arrow and dot to title
 const StaticWebsite = () => {
+  const [hoverIndex, setHoverIndex] = useState(-1);
+
   return (
     <MainDiv>
       <LeftDiv>
@@ -141,10 +185,18 @@ const StaticWebsite = () => {
         </BioSection>
         <Break />
         <ExperienceSection>
-          <ExperienceCard>
+          <ExperienceCard
+            isHovered={hoverIndex === 0}
+            isAnyHovered={hoverIndex !== -1}
+            onMouseEnter={() => setHoverIndex(0)}
+            onMouseLeave={() => setHoverIndex(-1)}
+          >
             <ExperienceCardDates>01/2022 – Present</ExperienceCardDates>
             <ExperienceCardDiv>
-              <ExperienceCardTitle>
+              <ExperienceCardTitle
+                isHovered={hoverIndex === 0}
+                isAnyHovered={hoverIndex !== -1}
+              >
                 Forward Deployed Software Engineer Gecko Robotics
               </ExperienceCardTitle>
               <ExperienceCardDescription>
@@ -158,10 +210,17 @@ const StaticWebsite = () => {
               </ExperienceCardDescription>
               <ExperienceCardLinks>
                 <ExperienceCardLink>
-                  https://www.popsci.com/technology/gecko-robotics-machine-inspects-navy-ships/
+                  <ExperienceCardLinkIcon src="link.svg" />
+
+                  <ExperienceCardLinkText href="https://www.popsci.com/technology/gecko-robotics-machine-inspects-navy-ships/">
+                    PopSci
+                  </ExperienceCardLinkText>
                 </ExperienceCardLink>
                 <ExperienceCardLink>
-                  https://www.youtube.com/watch?v=2MQsj-3rhMQ&t=50s
+                  <ExperienceCardLinkIcon src="link.svg" />
+                  <ExperienceCardLinkText href="https://www.youtube.com/watch?v=2MQsj-3rhMQ&t=50s">
+                    Software Spotlight
+                  </ExperienceCardLinkText>
                 </ExperienceCardLink>
               </ExperienceCardLinks>
               <ExperienceCardSkills>
@@ -176,10 +235,18 @@ const StaticWebsite = () => {
               </ExperienceCardSkills>
             </ExperienceCardDiv>
           </ExperienceCard>
-          <ExperienceCard>
+          <ExperienceCard
+            isHovered={hoverIndex === 1}
+            isAnyHovered={hoverIndex !== -1}
+            onMouseEnter={() => setHoverIndex(1)}
+            onMouseLeave={() => setHoverIndex(-1)}
+          >
             <ExperienceCardDates>03/2020 – 12/2022</ExperienceCardDates>
             <ExperienceCardDiv>
-              <ExperienceCardTitle>
+              <ExperienceCardTitle
+                isHovered={hoverIndex === 1}
+                isAnyHovered={hoverIndex !== -1}
+              >
                 Field Engineer Gecko Robotics
               </ExperienceCardTitle>
               <ExperienceCardDescription>
@@ -192,8 +259,14 @@ const StaticWebsite = () => {
                 using AWS Lambda within our cloud architecture.
               </ExperienceCardDescription>
               <ExperienceCardLinks>
-                <ExperienceCardLink>Link 1</ExperienceCardLink>
-                <ExperienceCardLink>Link 2</ExperienceCardLink>
+                <ExperienceCardLink>
+                  <ExperienceCardLinkIcon src="link.svg" />
+                  <ExperienceCardLinkText>Link 1</ExperienceCardLinkText>
+                </ExperienceCardLink>
+                <ExperienceCardLink>
+                  <ExperienceCardLinkIcon src="link.svg" />
+                  <ExperienceCardLinkText>Link 2</ExperienceCardLinkText>
+                </ExperienceCardLink>
               </ExperienceCardLinks>
               <ExperienceCardSkills>
                 <ExperienceCardSkill>Skill 1</ExperienceCardSkill>
@@ -201,10 +274,18 @@ const StaticWebsite = () => {
               </ExperienceCardSkills>
             </ExperienceCardDiv>
           </ExperienceCard>
-          <ExperienceCard>
+          <ExperienceCard
+            isHovered={hoverIndex === 2}
+            isAnyHovered={hoverIndex !== -1}
+            onMouseEnter={() => setHoverIndex(2)}
+            onMouseLeave={() => setHoverIndex(-1)}
+          >
             <ExperienceCardDates>01/2019 – 03/2020</ExperienceCardDates>
             <ExperienceCardDiv>
-              <ExperienceCardTitle>
+              <ExperienceCardTitle
+                isHovered={hoverIndex === 2}
+                isAnyHovered={hoverIndex !== -1}
+              >
                 Field Engineer Profrac Services
               </ExperienceCardTitle>
               <ExperienceCardDescription>
@@ -214,8 +295,14 @@ const StaticWebsite = () => {
                 interruptions as the lead on-site engineer.
               </ExperienceCardDescription>
               <ExperienceCardLinks>
-                <ExperienceCardLink>Link 1</ExperienceCardLink>
-                <ExperienceCardLink>Link 2</ExperienceCardLink>
+                <ExperienceCardLink>
+                  <ExperienceCardLinkIcon src="link.svg" />
+                  <ExperienceCardLinkText>Link 1</ExperienceCardLinkText>
+                </ExperienceCardLink>
+                <ExperienceCardLink>
+                  <ExperienceCardLinkIcon src="link.svg" />
+                  <ExperienceCardLinkText>Link 2</ExperienceCardLinkText>
+                </ExperienceCardLink>
               </ExperienceCardLinks>
               <ExperienceCardSkills>
                 <ExperienceCardSkill>Skill 1</ExperienceCardSkill>

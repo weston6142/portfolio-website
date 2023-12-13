@@ -19,7 +19,7 @@ import StaticWebsite from "./StaticWebsite";
 
 const ScrollControl = () => {
   const { camera } = useThree();
-  const minY = -4; // Define minimum Z value
+  const minY = -10; // Define minimum Z value
   const maxY = 2; // Define maximum Z value
   const moveAmount = 0.002; // Adjust move sensitivity
 
@@ -206,7 +206,7 @@ function Scene({ x1, y1, z1, x2, y2, z2 }) {
       <primitive object={scene} color={"white"} />
       <mesh position={[0, 0, 0]} rotation-x={-Math.PI / 2}>
         <planeGeometry args={[50, 50]} />
-        <meshStandardMaterial color={"#eeeeee"} />
+        <meshStandardMaterial color={"black"} />
       </mesh>
     </>
   );

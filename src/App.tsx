@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import styled from "styled-components";
-import Experience2 from "./components/Experience2";
+import Experience from "./components/Experience";
 
 // stylize App div
 const AppDiv = styled.div`
@@ -15,7 +15,7 @@ const AppDiv = styled.div`
 function App() {
   return (
     <AppDiv>
-      <Experience2 />
+      <Experience />
     </AppDiv>
   );
 }

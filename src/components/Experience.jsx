@@ -1,26 +1,146 @@
-import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
-import {
-  Billboard,
-  Center,
-  GradientTexture,
-  Html,
-  OrbitControls,
-  Stage,
-  Text3D,
-} from "@react-three/drei";
-import { Vector3 } from "three";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useGLTF, SpotLight, useDepthBuffer } from "@react-three/drei";
-import { useControls } from "leva";
+import React, { Suspense, useEffect, useState, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Reflector, Text, useTexture, useGLTF, Html } from "@react-three/drei";
+import { useThree } from "@react-three/fiber";
 import StaticWebsite from "./StaticWebsite";
 
-// setup Experience component
+export default function Experience() {
+  // add a useState to see if the intro has been played
+  const [introPlayed, setIntroPlayed] = useState(false);
+
+  return (
+    <Canvas
+      concurrent
+      gl={{ alpha: false }}
+      pixelRatio={[1, 1.5]}
+      camera={{ position: [0, 3, 100], fov: 15 }}
+    >
+      <color attach="background" args={["black"]} />
+      <fog attach="fog" args={["black", 15, 20]} />
+      <Suspense fallback={null}>
+        <group position={[0, -1, 0]}>
+          {/* <Carla
+            rotation={[0, Math.PI - 0.4, 0]}
+            position={[-1.2, 0, 0.6]}
+            scale={[0.26, 0.26, 0.26]}
+          /> */}
+          <VideoText
+            position={[-0.7, 1.6, -2]}
+            text={"Weston Bushyeager"}
+            fontSize={0.7}
+            clip={"/waves.mp4"}
+          />
+          <VideoText
+            position={[1, 0.5, 0]}
+            text={"Software Engineer"}
+            fontSize={0.5}
+            clip={"/nebula.mp4"}
+          />
+          <Ground />
+        </group>
+        <ambientLight intensity={0.5} />
+        <spotLight position={[0, 10, 0]} intensity={0.3} />
+        <directionalLight position={[-50, 0, -40]} intensity={0.7} />
+        <Intro introPlayed={introPlayed} setIntroPlayed={setIntroPlayed} />
+      </Suspense>
+      {introPlayed ? (
+        <Html position={[-2.77, -1.95, 0]} scale={100}>
+          <StaticWebsite />
+        </Html>
+      ) : null}
+      <ScrollControl />
+    </Canvas>
+  );
+}
+
+function Intro({ introPlayed, setIntroPlayed }) {
+  const [vec] = useState(() => new THREE.Vector3());
+
+  return useFrame((state) => {
+    const x = Math.round(state.camera.position.x);
+    const y = Math.round(state.camera.position.y);
+    const z = Math.round(state.camera.position.z);
+    console.log(x, y, z);
+    if (introPlayed === true) {
+      return;
+    } else if (x === 0 && y === 1 && z === 14) {
+      setIntroPlayed(true);
+      return;
+    } else {
+      state.camera.position.lerp(
+        //   vec.set(state.mouse.x * 5, 3 + state.mouse.y * 2, 14),
+        vec.set(0, 1, 14),
+
+        0.05
+      );
+      state.camera.lookAt(0, 0, 0);
+    }
+  });
+}
+
+// function Carla(props) {
+//   const { scene } = useGLTF("/carla-draco.glb");
+//   return <primitive object={scene} {...props} />;
+// }
+
+function VideoText(props) {
+  const [video] = useState(() =>
+    Object.assign(document.createElement("video"), {
+      src: props.clip,
+      crossOrigin: "Anonymous",
+      loop: true,
+      muted: true,
+    })
+  );
+  useEffect(() => void video.play(), [video]);
+  return (
+    <Text font="/Inter-Bold.woff" letterSpacing={-0.06} {...props}>
+      {props.text}
+      <meshBasicMaterial toneMapped={false}>
+        <videoTexture
+          attach="map"
+          args={[video]}
+          encoding={THREE.sRGBEncoding}
+        />
+      </meshBasicMaterial>
+    </Text>
+  );
+}
+
+function Ground() {
+  const [floor, normal] = useTexture([
+    "/SurfaceImperfections003_1K_var1.jpg",
+    "/SurfaceImperfections003_1K_Normal.jpg",
+  ]);
+  return (
+    <Reflector
+      blur={[400, 100]}
+      resolution={512}
+      args={[10, 10]}
+      mirror={0.5}
+      mixBlur={6}
+      mixStrength={1.5}
+      rotation={[-Math.PI / 2, 0, Math.PI / 2]}
+    >
+      {(Material, props) => (
+        <Material
+          color="#a0a0a0"
+          metalness={0.4}
+          roughnessMap={floor}
+          normalMap={normal}
+          normalScale={[2, 2]}
+          {...props}
+        />
+      )}
+    </Reflector>
+  );
+}
 
 const ScrollControl = () => {
   const { camera } = useThree();
-  const minY = -10; // Define minimum Z value
-  const maxY = 2; // Define maximum Z value
+  const minY = -6; // Define minimum Z value
+  const maxY = 1; // Define maximum Z value
   const moveAmount = 0.002; // Adjust move sensitivity
 
   // Touch state reference
@@ -81,163 +201,3 @@ const ScrollControl = () => {
 
   return null;
 };
-
-const Experience = (props) => {
-  const { x1, y1, z1 } = useControls({
-    x1: {
-      value: -3,
-      min: -10,
-      max: 10,
-      step: 0.1,
-    },
-    y1: {
-      value: 3.1,
-      min: -10,
-      max: 10,
-      step: 0.1,
-    },
-    z1: {
-      value: 1.7,
-      min: -10,
-      max: 10,
-      step: 0.1,
-    },
-  });
-
-  const { x2, y2, z2 } = useControls({
-    x2: {
-      value: 2.4,
-      min: -10,
-      max: 10,
-      step: 0.1,
-    },
-    y2: {
-      value: 3.2,
-      min: -10,
-      max: 10,
-      step: 0.1,
-    },
-    z2: {
-      value: 1.7,
-      min: -10,
-      max: 10,
-      step: 0.1,
-    },
-  });
-
-  return (
-    <Canvas
-      dpr={[1, 2]}
-      camera={{ position: [0, 2, 7], fov: 50, near: 1, far: 20 }}
-    >
-      {/* <color attach="background" args={["#202020"]} /> */}
-      <color attach="background" args={["black"]} />
-
-      {/* <fog attach="fog" args={["#202020", 5, 20]} /> */}
-      <fog attach="fog" args={["black", 5, 20]} />
-
-      <ambientLight intensity={1} />
-      {/* <ambientLight intensity={0.095} /> */}
-
-      <Scene x1={x1} y1={y1} z1={z1} x2={x2} y2={y2} z2={z2} />
-      {/* <Html as="div" position={[0, 0, 0]} /> */}
-      <Billboard position={[-5, 2, 0]}>
-        <Text3D font={"/Roboto_Regular.json"} size={0.25}>
-          Weston Bushyeager
-          <meshStandardMaterial>
-            <GradientTexture
-              stops={[0, 1]} // As many stops as you want
-              colors={["aquamarine", "hotpink"]} // Colors need to match the number of stops
-              size={1024} // Size is optional, default = 1024
-            />
-          </meshStandardMaterial>
-        </Text3D>
-      </Billboard>
-      <Billboard position={[-5, 1.5, 0]}>
-        <Text3D font={"/Roboto_Regular.json"} size={0.15}>
-          Software Engineer
-          <meshStandardMaterial>
-            <GradientTexture
-              stops={[0, 1]} // As many stops as you want
-              colors={["aquamarine", "hotpink"]} // Colors need to match the number of stops
-              size={1024} // Size is optional, default = 1024
-            />
-          </meshStandardMaterial>
-        </Text3D>
-      </Billboard>
-      <Html position={[-5, -0.5, 0]} scale={100}>
-        <StaticWebsite />
-      </Html>
-
-      <axesHelper args={[1]} />
-      {/* <OrbitControls /> */}
-      <ScrollControl />
-    </Canvas>
-  );
-};
-
-function Scene({ x1, y1, z1, x2, y2, z2 }) {
-  // This is a super cheap depth buffer that only renders once (frames: 1 is optional!), which works well for static scenes
-  // Spots can optionally use that for realism, learn about soft particles here: http://john-chapman-graphics.blogspot.com/2013/01/good-enough-volumetrics-for-spotlights.html
-  const depthBuffer = useDepthBuffer({ frames: 1 });
-  // const { nodes, materials } = useGLTF(
-  //   "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/dragon/model.gltf"
-  // );
-
-  // create use controls for MovingSpot position
-
-  const { scene } = useGLTF(
-    "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/react-logo/model.gltf"
-  );
-  return (
-    <>
-      <MovingSpot
-        depthBuffer={depthBuffer}
-        // color="#000077"
-        color="#00b2d2"
-        position={[x1, y1, z1]}
-      />
-      <MovingSpot
-        depthBuffer={depthBuffer}
-        // color="#6A2ECD"
-        color="#00b2d2"
-        position={[x2, y2, z2]}
-      />
-      <primitive object={scene} color={"white"} />
-      <mesh position={[0, 0, 0]} rotation-x={-Math.PI / 2}>
-        <planeGeometry args={[50, 50]} />
-        <meshStandardMaterial color={"black"} />
-      </mesh>
-    </>
-  );
-}
-
-function MovingSpot({ vec = new Vector3(), ...props }) {
-  const light = useRef();
-  const viewport = useThree((state) => state.viewport);
-  useFrame((state) => {
-    light.current.target.position.lerp(
-      vec.set(
-        (state.mouse.x * viewport.width) / 2,
-        (state.mouse.y * viewport.height) / 2,
-        0
-      ),
-      0.1
-    );
-    light.current.target.updateMatrixWorld();
-  });
-  return (
-    <SpotLight
-      ref={light}
-      penumbra={1}
-      distance={6}
-      angle={0.35}
-      attenuation={5}
-      anglePower={4}
-      intensity={10}
-      {...props}
-    />
-  );
-}
-
-export default Experience;

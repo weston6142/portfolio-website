@@ -26,7 +26,7 @@ export default function Experience() {
             scale={[0.26, 0.26, 0.26]}
           /> */}
           <VideoText
-            position={[-0.7, 1.6, -2]}
+            position={[-0.7, 1.5, -2]}
             text={"Weston Bushyeager"}
             fontSize={0.7}
             clip={"/waves.mp4"}

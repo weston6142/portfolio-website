@@ -137,20 +137,37 @@ const ExperienceCardSkill = styled.div`
   font-size: 0.75rem;
 `;
 
-const MainLink = styled.div``;
+const MainLink = styled.div`
+  dislay: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+const MainLinkIcon = styled.img`
+  width: 1rem;
+`;
+
+const MainLinkText = styled.div`
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+`;
 
 const NameText = styled.div`
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 3rem;
+  font-weight: 700;
 `;
 
 const TitleText = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 500;
 `;
 
 const ShortBioText = styled.div`
   font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
   color: grey;
 `;
 //TODO: need to add arrow and dot to title
@@ -177,7 +194,7 @@ const StaticWebsite = () => {
       <LeftDiv>
         <NameText>Weston Bushyeager</NameText>
         <TitleText>Software Engineer</TitleText>
-        <ShortBioText>This is a short bio</ShortBioText>
+        <ShortBioText>I build software that solves problems.</ShortBioText>
         <SectionDiv>
           <SectionLine></SectionLine>
           <SectionText>About</SectionText>
@@ -328,7 +345,10 @@ const StaticWebsite = () => {
             </ExperienceCardDiv>
           </ExperienceCard>
         </ExperienceSection>
-        <MainLink>Resume Link</MainLink>
+        <MainLink>
+          <MainLinkText>Resume Link</MainLinkText>
+          <MainLinkIcon src="arrow.svg" />
+        </MainLink>
         <Break />
         <ExperienceSection>
           <ExperienceCard>
@@ -343,7 +363,10 @@ const StaticWebsite = () => {
             </ExperienceCardDiv>
           </ExperienceCard>
         </ExperienceSection>
-        <MainLink>Resume Link</MainLink>
+        <MainLink>
+          <MainLinkText>Surefire Betting</MainLinkText>
+          <MainLinkIcon src="arrow.svg" />
+        </MainLink>
       </RightDiv>
     </MainDiv>
   );

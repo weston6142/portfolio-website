@@ -1,9 +1,18 @@
 import * as THREE from "three";
 import React, { Suspense, useEffect, useState, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Reflector, Text, useTexture, useGLTF, Html } from "@react-three/drei";
+import {
+  Reflector,
+  Text,
+  Text3D,
+  useTexture,
+  useGLTF,
+  Html,
+  Billboard,
+} from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import StaticWebsite from "./StaticWebsite";
+import { useSpring, a } from "@react-spring/three";
 
 export default function Experience() {
   // add a useState to see if the intro has been played
@@ -50,6 +59,7 @@ export default function Experience() {
         </Html>
       ) : null}
       <ScrollControl />
+      <NavBillboard />
     </Canvas>
   );
 }
@@ -201,3 +211,53 @@ const ScrollControl = () => {
 
   return null;
 };
+
+const NavBillboard = () => {
+  const { camera } = useThree();
+  const thresholdY = -1.5; // Define the threshold Y position
+  const [billboardY, setBillboardY] = useState(-2);
+
+  useFrame(() => {
+    if (camera.position.y <= thresholdY) {
+      setBillboardY(camera.position.y);
+    } else {
+      setBillboardY(-2);
+    }
+  });
+
+  return (
+    <Billboard position={[-3, billboardY, 0]}>
+      <Text3D scale={0.2} font={"/Roboto_Regular.json"}>
+        <meshNormalMaterial />
+        {"Weston Bushyeager"}
+      </Text3D>
+    </Billboard>
+  );
+};
+
+// const NavBillboard = () => {
+//   const { camera } = useThree();
+//   const thresholdY = -1.5; // Define the threshold Y position
+//   const [billboardY, setBillboardY] = useState(-2);
+
+//   const props = useSpring({
+//     position: [-3, billboardY, 0],
+//   });
+
+//   useFrame(() => {
+//     if (camera.position.y <= thresholdY) {
+//       setBillboardY(camera.position.y);
+//     } else {
+//       setBillboardY(-2);
+//     }
+//   });
+
+//   return (
+//     <a.Billboard {...props}>
+//       <Text3D scale={0.2} font={"/Roboto_Regular.json"}>
+//         <meshNormalMaterial />
+//         {"Weston Bushyeager"}
+//       </Text3D>
+//     </a.Billboard>
+//   );
+// };

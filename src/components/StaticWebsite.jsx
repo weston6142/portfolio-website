@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 const MainDiv = styled.div`
   width: 80vw;
   height: 200vh;
-  background: green;
+  background: transparent;
   display: flex;
 `;
 
 const LeftDiv = styled.div`
   width: 50%;
   height: 100%;
-  background: #0f172a;
+  background: transparent;
   padding-top: 4rem;
   padding-bottom: 4rem;
   padding-left: 6rem;
@@ -28,15 +28,20 @@ const RightDiv = styled.div`
   padding-right: 6rem;
 `;
 
+const SectionLine = styled.div`
+  width: 2.5rem;
+  height: 0.1rem;
+  background: #fff;
+  transition: width 0.1s ease-in-out;
+`;
+
 const SectionDiv = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const SectionLine = styled.div`
-  width: 1rem;
-  height: 0.1rem;
-  background: #fff;
+  gap: 1rem;
+  &:hover ${SectionLine} {
+    width: 5rem; // Change this to the desired width
+  }
 `;
 
 const Break = styled.div`
@@ -192,7 +197,7 @@ const StaticWebsite = () => {
   return (
     <MainDiv>
       <LeftDiv>
-        <NameText>Weston Bushyeager</NameText>
+        {/* <NameText>Weston Bushyeager</NameText>
         <TitleText>Software Engineer</TitleText>
         <ShortBioText>I build software that solves problems.</ShortBioText>
         <SectionDiv>
@@ -207,7 +212,7 @@ const StaticWebsite = () => {
           <SectionLine></SectionLine>
           <SectionText>Projects</SectionText>
         </SectionDiv>
-        <SocialIconsDiv>Social Icons</SocialIconsDiv>
+        <SocialIconsDiv>Social Icons</SocialIconsDiv> */}
       </LeftDiv>
       <RightDiv>
         <BioSection>

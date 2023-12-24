@@ -8,11 +8,12 @@ import {
   useTexture,
   useGLTF,
   Html,
-  Billboard,
+  ScreenSpace,
 } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import StaticWebsite from "./StaticWebsite";
-import { useSpring, a } from "@react-spring/three";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
+import { KernelSize } from "postprocessing";
 
 export default function Experience() {
   // add a useState to see if the intro has been played
@@ -59,7 +60,7 @@ export default function Experience() {
         </Html>
       ) : null}
       <ScrollControl />
-      <NavBillboard />
+      {introPlayed ? <NavBillboard /> : null}
     </Canvas>
   );
 }
@@ -215,49 +216,86 @@ const ScrollControl = () => {
 const NavBillboard = () => {
   const { camera } = useThree();
   const thresholdY = -1.5; // Define the threshold Y position
-  const [billboardY, setBillboardY] = useState(-2);
+  const [showScreen, setShowScreen] = useState(false);
 
   useFrame(() => {
     if (camera.position.y <= thresholdY) {
-      setBillboardY(camera.position.y);
+      setShowScreen(true);
     } else {
-      setBillboardY(-2);
+      setShowScreen(false);
     }
   });
 
+  if (!showScreen) {
+    return null;
+  }
+
   return (
-    <Billboard position={[-3, billboardY, 0]}>
-      <Text3D scale={0.2} font={"/Roboto_Regular.json"}>
-        <meshNormalMaterial />
-        {"Weston Bushyeager"}
-      </Text3D>
-    </Billboard>
+    <>
+      <ScreenSpace depth={1}>
+        <Text3D
+          scale={0.01}
+          font={"/Roboto_Regular.json"}
+          position={[-0.2, 0.05, 0]}
+        >
+          <meshBasicMaterial color={"#00b2d2"} toneMapped={false} />
+          {"Weston Bushyeager"}
+        </Text3D>
+        <Text3D
+          scale={0.009}
+          font={"/Roboto_Regular.json"}
+          position={[-0.2, 0.035, 0]}
+        >
+          <meshBasicMaterial color={"#00b2d2"} toneMapped={false} />
+          {"Software Engineer"}
+        </Text3D>
+        <Text3D
+          scale={0.007}
+          font={"/Roboto_Regular.json"}
+          position={[-0.2, 0.02, 0]}
+        >
+          <meshBasicMaterial color={"white"} toneMapped={false} />
+          {"I build software that solves problems."}
+        </Text3D>
+        <Text3D
+          scale={0.006}
+          font={"/Roboto_Regular.json"}
+          position={[-0.2, 0.0, 0]}
+        >
+          <meshBasicMaterial color={"white"} toneMapped={false} />
+          {"About"}
+        </Text3D>
+        <Text3D
+          scale={0.006}
+          font={"/Roboto_Regular.json"}
+          position={[-0.2, -0.01, 0]}
+        >
+          <meshBasicMaterial color={"white"} toneMapped={false} />
+          {"Experience"}
+        </Text3D>
+        <Text3D
+          scale={0.006}
+          font={"/Roboto_Regular.json"}
+          position={[-0.2, -0.02, 0]}
+        >
+          <meshBasicMaterial color={"white"} toneMapped={false} />
+          {"Projects"}
+        </Text3D>
+      </ScreenSpace>
+      <EffectComposer multisampling={8}>
+        <Bloom
+          kernelSize={3}
+          luminanceThreshold={0}
+          luminanceSmoothing={0.4}
+          intensity={0.3}
+        />
+        <Bloom
+          kernelSize={KernelSize.HUGE}
+          luminanceThreshold={0}
+          luminanceSmoothing={0}
+          intensity={0.2}
+        />
+      </EffectComposer>
+    </>
   );
 };
-
-// const NavBillboard = () => {
-//   const { camera } = useThree();
-//   const thresholdY = -1.5; // Define the threshold Y position
-//   const [billboardY, setBillboardY] = useState(-2);
-
-//   const props = useSpring({
-//     position: [-3, billboardY, 0],
-//   });
-
-//   useFrame(() => {
-//     if (camera.position.y <= thresholdY) {
-//       setBillboardY(camera.position.y);
-//     } else {
-//       setBillboardY(-2);
-//     }
-//   });
-
-//   return (
-//     <a.Billboard {...props}>
-//       <Text3D scale={0.2} font={"/Roboto_Regular.json"}>
-//         <meshNormalMaterial />
-//         {"Weston Bushyeager"}
-//       </Text3D>
-//     </a.Billboard>
-//   );
-// };

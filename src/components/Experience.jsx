@@ -14,6 +14,10 @@ import { useThree } from "@react-three/fiber";
 import StaticWebsite from "./StaticWebsite";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { KernelSize } from "postprocessing";
+import { useSpring, animated } from "@react-spring/three";
+
+const AnimatedText3D = animated(Text3D);
+const AnimatedScreenSpace = animated(ScreenSpace);
 
 export default function Experience() {
   // add a useState to see if the intro has been played
@@ -217,12 +221,37 @@ const NavBillboard = () => {
   const { camera } = useThree();
   const thresholdY = -1.5; // Define the threshold Y position
   const [showScreen, setShowScreen] = useState(false);
+  const previousY = useRef(camera.position.y);
+
+  const [spring, setSpring] = useSpring(() => ({
+    rotation: [0, 0, 0],
+    config: { mass: 1, tension: 180, friction: 12 },
+  }));
+
+  // useFrame(() => {
+  //   if (camera.position.y <= thresholdY) {
+  //     setShowScreen(true);
+  //   } else {
+  //     setShowScreen(false);
+  //   }
+  // });
 
   useFrame(() => {
-    if (camera.position.y <= thresholdY) {
-      setShowScreen(true);
+    const deltaY = camera.position.y - previousY.current;
+    previousY.current = camera.position.y;
+
+    setShowScreen(camera.position.y <= thresholdY);
+
+    // Define the spring effect you want. Here's an example:
+    // If the camera moves down, rotate the text forward.
+    if (deltaY < 0) {
+      setSpring({ rotation: [-0.5, 0, 0] });
+    } else if (deltaY > 0) {
+      // If the camera moves up, rotate the text backward.
+      setSpring({ rotation: [0.5, 0, 0] });
     } else {
-      setShowScreen(false);
+      // Return to the original rotation when movement stops
+      setSpring({ rotation: [0, 0, 0] });
     }
   });
 
@@ -233,54 +262,60 @@ const NavBillboard = () => {
   return (
     <>
       <ScreenSpace depth={1}>
-        <Text3D
+        <AnimatedText3D
           scale={0.01}
           font={"/Roboto_Regular.json"}
           position={[-0.2, 0.05, 0]}
+          {...spring}
         >
           <meshBasicMaterial color={"#00b2d2"} toneMapped={false} />
           {"Weston Bushyeager"}
-        </Text3D>
-        <Text3D
+        </AnimatedText3D>
+        <AnimatedText3D
           scale={0.009}
           font={"/Roboto_Regular.json"}
           position={[-0.2, 0.035, 0]}
+          {...spring}
         >
           <meshBasicMaterial color={"#00b2d2"} toneMapped={false} />
           {"Software Engineer"}
-        </Text3D>
-        <Text3D
+        </AnimatedText3D>
+        <AnimatedText3D
           scale={0.007}
           font={"/Roboto_Regular.json"}
           position={[-0.2, 0.02, 0]}
+          {...spring}
         >
           <meshBasicMaterial color={"white"} toneMapped={false} />
           {"I build software that solves problems."}
-        </Text3D>
-        <Text3D
+        </AnimatedText3D>
+        <AnimatedText3D
           scale={0.006}
           font={"/Roboto_Regular.json"}
           position={[-0.2, 0.0, 0]}
+          {...spring}
         >
           <meshBasicMaterial color={"white"} toneMapped={false} />
           {"About"}
-        </Text3D>
-        <Text3D
+        </AnimatedText3D>
+        <AnimatedText3D
           scale={0.006}
           font={"/Roboto_Regular.json"}
           position={[-0.2, -0.01, 0]}
+          {...spring}
         >
           <meshBasicMaterial color={"white"} toneMapped={false} />
           {"Experience"}
-        </Text3D>
-        <Text3D
+        </AnimatedText3D>
+        <AnimatedText3D
           scale={0.006}
           font={"/Roboto_Regular.json"}
           position={[-0.2, -0.02, 0]}
+          {...spring}
         >
           <meshBasicMaterial color={"white"} toneMapped={false} />
           {"Projects"}
-        </Text3D>
+        </AnimatedText3D>
       </ScreenSpace>
       <EffectComposer multisampling={8}>
         <Bloom

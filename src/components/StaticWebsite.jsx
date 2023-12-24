@@ -216,18 +216,39 @@ const StaticWebsite = () => {
       </LeftDiv>
       <RightDiv>
         <BioSection>
-          Back in 2012, I decided to try my hand at creating custom Tumblr
-          themes and tumbled head first into the rabbit hole of coding and web
-          development. Fast-forward to today, and I’ve had the privilege of
-          building software for an advertising agency, a start-up, a student-led
-          design studio, and a huge corporation. <br></br>
-          <br></br>My main focus these days is building products and leading
-          projects for our clients at Upstatement. <br></br>
-          <br></br>In my free time I've also released an online video course
-          that covers everything you need to know to build a web app with the
-          Spotify API. When I’m not at the computer, I’m usually rock climbing,
-          hanging out with my wife and two cats, or running around Hyrule
-          searching for Korok seeds.
+          {" "}
+          My foray into the tech realm began at Penn State in 2014 when I headed
+          to college for a degree in Petroleum Engineering. A gen-ed c++ class
+          opened up a new world for me, and before I knew it, I was devouring
+          Python in my spare time. I originally had a particular penchant for
+          web scraping. Even with a freshly minted Petroleum Engineering degree,
+          I knew I wanted my career to weave through code, not oil fields.{" "}
+          <br></br> <br></br>Starting as a Fracking Engineer, I quickly pivoted
+          to Gecko Robotics, where I rolled up my sleeves as a Field Engineer
+          working with the robots. That's where Python became more than a hobby,
+          putting together an automated support system using a Slack bot and AWS
+          Lambda, and crafting a nifty laser profilometry crawler with PyQt.{" "}
+          <br></br>
+          <br></br>It was during this chapter, amidst the nuts and bolts of
+          robots and code, that I decided to mesh my tech skills with a personal
+          interest in sports betting. Tinkering away, I built the first US
+          Sports Betting Arbitrage site using Python and cloud computing
+          automation. It felt like I was hitting a sweet spot, and soon I had 16
+          monthly subscribers, each seeking to make smarter bets with my
+          website. <br></br>
+          <br></br>It wasn't long before I carved out a niche as a Forward
+          Deployed Software Engineer at Gecko Robotics focusing on work with the
+          U.S. Navy. Starting as the only Software Engineer on the team, we
+          became the fastest growing vertical in the company, quickly surpassing
+          millions in revenue, and I had the opportunity to the world. I dive
+          into everything from data pipeline construction, asset visualization
+          web apps, firmware, and getting hands-on with a tech-stack that
+          spanned from the familiar Python to TypeScript, React, and beyond.{" "}
+          <br></br> <br></br>
+          Life isn't all code though. Away from the screen, I'm usually hanging
+          out with my friends, wife, and beagle Rusty around Pittsburgh, lacing
+          up for a run, traveling, or tackling the latest home improvement
+          quest.
         </BioSection>
         <Break />
         <ExperienceSection>

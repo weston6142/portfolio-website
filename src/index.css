@@ -8,6 +8,10 @@ body {
   color: white;
 }
 
+::selection {
+  background-color: #00b2d2;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

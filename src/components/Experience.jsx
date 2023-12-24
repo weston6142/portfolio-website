@@ -17,11 +17,11 @@ import { KernelSize } from "postprocessing";
 import { useSpring, animated } from "@react-spring/three";
 
 const AnimatedText3D = animated(Text3D);
-const AnimatedScreenSpace = animated(ScreenSpace);
 
 export default function Experience() {
   // add a useState to see if the intro has been played
   const [introPlayed, setIntroPlayed] = useState(false);
+  // const gltf = useGLTF("/models/model.glb");
 
   return (
     <Canvas
@@ -34,10 +34,11 @@ export default function Experience() {
       <fog attach="fog" args={["black", 15, 20]} />
       <Suspense fallback={null}>
         <group position={[0, -1, 0]}>
-          {/* <Carla
+          {/* <primitive
             rotation={[0, Math.PI - 0.4, 0]}
             position={[-1.2, 0, 0.6]}
             scale={[0.26, 0.26, 0.26]}
+            object={gltf.scene}
           /> */}
           <VideoText
             position={[-0.7, 1.5, -2]}
@@ -76,7 +77,6 @@ function Intro({ introPlayed, setIntroPlayed }) {
     const x = Math.round(state.camera.position.x);
     const y = Math.round(state.camera.position.y);
     const z = Math.round(state.camera.position.z);
-    console.log(x, y, z);
     if (introPlayed === true) {
       return;
     } else if (x === 0 && y === 1 && z === 14) {
@@ -154,7 +154,7 @@ function Ground() {
 
 const ScrollControl = () => {
   const { camera } = useThree();
-  const minY = -6; // Define minimum Z value
+  const minY = -8; // Define minimum Z value
   const maxY = 1; // Define maximum Z value
   const moveAmount = 0.002; // Adjust move sensitivity
 
@@ -197,7 +197,6 @@ const ScrollControl = () => {
   };
 
   useEffect(() => {
-    console.log(camera);
     // Add event listeners
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("touchstart", handleTouchStart, { passive: false });
@@ -222,19 +221,12 @@ const NavBillboard = () => {
   const thresholdY = -1.5; // Define the threshold Y position
   const [showScreen, setShowScreen] = useState(false);
   const previousY = useRef(camera.position.y);
+  const gltf = useGLTF("/models/linkedin.glb");
 
   const [spring, setSpring] = useSpring(() => ({
     rotation: [0, 0, 0],
     config: { mass: 1, tension: 180, friction: 12 },
   }));
-
-  // useFrame(() => {
-  //   if (camera.position.y <= thresholdY) {
-  //     setShowScreen(true);
-  //   } else {
-  //     setShowScreen(false);
-  //   }
-  // });
 
   useFrame(() => {
     const deltaY = camera.position.y - previousY.current;
@@ -258,7 +250,7 @@ const NavBillboard = () => {
   if (!showScreen) {
     return null;
   }
-
+  console.log(gltf.scene);
   return (
     <>
       <ScreenSpace depth={1}>
@@ -316,6 +308,7 @@ const NavBillboard = () => {
           <meshBasicMaterial color={"white"} toneMapped={false} />
           {"Projects"}
         </AnimatedText3D>
+        <primitive object={gltf.scene} />
       </ScreenSpace>
       <EffectComposer multisampling={8}>
         <Bloom

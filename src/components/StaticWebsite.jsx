@@ -1,6 +1,12 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 
+const BioLinks = styled.a`
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+`;
+
 const MainDiv = styled.div`
   width: 80vw;
   height: 200vh;
@@ -55,6 +61,8 @@ const SocialIconsDiv = styled.div``;
 const BioSection = styled.div`
   line-height: 1.625rem;
   margin-bottom: 1rem;
+  color: grey;
+  font-size: 1.1rem;
 `;
 
 const ExperienceSection = styled.div``;
@@ -226,12 +234,18 @@ const StaticWebsite = () => {
           Python in my spare time. I originally had a particular penchant for
           web scraping. Even with a freshly minted Petroleum Engineering degree,
           I knew I wanted my career to weave through code, not oil fields.{" "}
-          <br></br> <br></br>Starting as a Hydraulic Fracturing Engineer, I
-          quickly pivoted to Gecko Robotics, where I rolled up my sleeves as a
-          Field Engineer working with the robots. That's where Python became
-          more than a hobby, putting together an automated support system using
-          a Slack bot and AWS Lambda, and crafting a nifty laser profilometry
-          crawler with PyQt. <br></br>
+          <br></br> <br></br>Starting as a{" "}
+          <BioLinks href="https://www.ziprecruiter.com/career/Hydraulic-Fracturing-Engineer/What-Is-How-to-Become">
+            Hydraulic Fracturing Engineer
+          </BioLinks>
+          , I quickly pivoted to{" "}
+          <BioLinks href="https://www.geckorobotics.com">
+            Gecko Robotics
+          </BioLinks>
+          , where I rolled up my sleeves as a Field Engineer working with the
+          robots. That's where Python became more than a hobby, putting together
+          an automated support system using a Slack bot and AWS Lambda, and
+          crafting a nifty laser profilometry crawler with PyQt. <br></br>
           <br></br>It was during this chapter, amidst the nuts and bolts of
           robots and code, that I decided to mesh my tech skills with a personal
           interest in sports betting. Tinkering away, I built the first US
@@ -240,14 +254,23 @@ const StaticWebsite = () => {
           paying monthly subscribers, each seeking to make smarter bets with my
           website. <br></br>
           <br></br>It wasn't long before I carved out a niche as a Forward
-          Deployed Software Engineer at Gecko Robotics focusing on work with the
-          U.S. Navy. Starting as the only Software Engineer on the team, we
-          became the fastest growing vertical in the company, quickly surpassing
-          millions in revenue, and I had the opportunity to travel the world. I
-          dive into everything from data pipeline construction, asset
-          visualization web apps, firmware, and getting hands-on with a
-          tech-stack that spans from the familiar Python to TypeScript, React,
-          and beyond. <br></br> <br></br>
+          Deployed Software Engineer at{" "}
+          <BioLinks href="https://www.geckorobotics.com">
+            Gecko Robotics
+          </BioLinks>{" "}
+          focusing on{" "}
+          <BioLinks href="https://www.popsci.com/technology/gecko-robotics-machine-inspects-navy-ships/">
+            work with the U.S. Navy.
+          </BioLinks>{" "}
+          Starting as the only Software Engineer on the team, we became the
+          fastest growing vertical in the company, quickly surpassing millions
+          in revenue, and I had the opportunity to travel the world. I dive into
+          everything from data pipeline construction,{" "}
+          <BioLinks href="https://www.youtube.com/watch?v=2MQsj-3rhMQ&ab_channel=GeckoRobotics">
+            asset visualization web apps
+          </BioLinks>
+          , firmware, and getting hands-on with a tech-stack that spans from the
+          familiar Python to TypeScript, React, and beyond. <br></br> <br></br>
           Life isn't all code though. Away from the screen, I'm usually hanging
           out with my friends, wife, and beagle Rusty around Pittsburgh, lacing
           up for a run, traveling, or tackling the latest home improvement

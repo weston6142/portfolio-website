@@ -9,6 +9,7 @@ import {
   useGLTF,
   Html,
   ScreenSpace,
+  Box,
 } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import StaticWebsite from "./StaticWebsite";
@@ -222,6 +223,14 @@ const NavBillboard = () => {
   const [showScreen, setShowScreen] = useState(false);
   const previousY = useRef(camera.position.y);
   const gltf = useGLTF("/models/linkedin.glb");
+  const aboutSectionHeight = -1.5;
+  const experienceSectionHeight = -3.5;
+  const projectsSectionHeight = -6.5;
+  const [aboutSectionText, setAboutSectionText] = useState("--- About");
+  const [experienceSectionText, setExperienceSectionText] =
+    useState("--- Experience");
+  const [projectsSectionText, setProjectsSectionText] =
+    useState("--- Projects");
 
   const [spring, setSpring] = useSpring(() => ({
     rotation: [0, 0, 0],
@@ -244,6 +253,30 @@ const NavBillboard = () => {
     } else {
       // Return to the original rotation when movement stops
       setSpring({ rotation: [0, 0, 0] });
+    }
+
+    if (
+      (camera.position.y <= aboutSectionHeight) &
+      (camera.position.y > experienceSectionHeight)
+    ) {
+      setAboutSectionText("------ About");
+      setExperienceSectionText("--- Experience");
+      setProjectsSectionText("--- Projects");
+    } else if (
+      (camera.position.y <= experienceSectionHeight) &
+      (camera.position.y > projectsSectionHeight)
+    ) {
+      setAboutSectionText("--- About");
+      setExperienceSectionText("------ Experience");
+      setProjectsSectionText("--- Projects");
+    } else if (camera.position.y <= projectsSectionHeight) {
+      setAboutSectionText("--- About");
+      setExperienceSectionText("--- Experience");
+      setProjectsSectionText("------ Projects");
+    } else {
+      setAboutSectionText("--- About");
+      setExperienceSectionText("--- Experience");
+      setProjectsSectionText("--- Projects");
     }
   });
 
@@ -288,7 +321,7 @@ const NavBillboard = () => {
           {...spring}
         >
           <meshBasicMaterial color={"white"} toneMapped={false} />
-          {"About"}
+          {aboutSectionText}
         </AnimatedText3D>
         <AnimatedText3D
           scale={0.006}
@@ -297,7 +330,7 @@ const NavBillboard = () => {
           {...spring}
         >
           <meshBasicMaterial color={"white"} toneMapped={false} />
-          {"Experience"}
+          {experienceSectionText}
         </AnimatedText3D>
         <AnimatedText3D
           scale={0.006}
@@ -306,7 +339,7 @@ const NavBillboard = () => {
           {...spring}
         >
           <meshBasicMaterial color={"white"} toneMapped={false} />
-          {"Projects"}
+          {projectsSectionText}
         </AnimatedText3D>
         <primitive object={gltf.scene} />
       </ScreenSpace>

@@ -24,7 +24,17 @@ const AnimatedLinkedInIcon = animated(LinkedInIcon);
 export default function Experience() {
   // add a useState to see if the intro has been played
   const [introPlayed, setIntroPlayed] = useState(false);
+  const [showArrow, setShowArrow] = useState(false);
   // const gltf = useGLTF("/models/model.glb");
+
+  //create a useEffect to wait 3 seconds after introplayed is set to true to set showArrow to true
+  useEffect(() => {
+    if (introPlayed === true) {
+      setTimeout(() => {
+        setShowArrow(true);
+      }, 2000);
+    }
+  });
 
   return (
     <Canvas
@@ -69,6 +79,7 @@ export default function Experience() {
       ) : null}
       <ScrollControl />
       {introPlayed ? <NavBillboard /> : null}
+      {showArrow ? <FloatingArrow /> : null}
     </Canvas>
   );
 }
@@ -417,3 +428,36 @@ export function LinkedInIcon(props) {
     </group>
   );
 }
+
+const FloatingArrow = () => {
+  const groupRef = useRef();
+
+  useFrame(({ clock }) => {
+    const a = clock.getElapsedTime();
+    groupRef.current.position.y = 0.1 * Math.sin(a * 2) - 0.55;
+    groupRef.current.position.z = 5;
+  });
+
+  return (
+    <group ref={groupRef} rotation={[0, 0, Math.PI]} scale={0.4}>
+      {/* Cylinder (shaft of the arrow) */}
+      <mesh position={[0, 0.3, 0]}>
+        <cylinderGeometry args={[0.02, 0.02, 0.3, 32]} />
+        <meshStandardMaterial
+          color={theme.colors.grey}
+          emissive={theme.colors.grey}
+          emissiveIntensity={0.6}
+        />
+      </mesh>
+      {/* Cone (tip of the arrow) */}
+      <mesh position={[0, 0.55, 0]}>
+        <coneGeometry args={[0.05, 0.2, 32]} />
+        <meshStandardMaterial
+          color={theme.colors.primary}
+          emissive={theme.colors.primary}
+          emissiveIntensity={0.6}
+        />
+      </mesh>
+    </group>
+  );
+};

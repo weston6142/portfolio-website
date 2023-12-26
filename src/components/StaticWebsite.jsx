@@ -9,7 +9,7 @@ const BioLinks = styled.a`
 
 const MainDiv = styled.div`
   width: 80vw;
-  height: 200vh;
+  height: 220vh;
   background: transparent;
   display: flex;
 `;
@@ -410,7 +410,15 @@ const StaticWebsite = () => {
                 Founder Surefire Betting
               </ExperienceCardTitleText>
               <ExperienceCardDescription>
-                Surefire betting description
+                I founded surefirebetting.com, which was the first U.S. focused
+                sports betting arbitrage website. Sports betting arbitrage is a
+                way to make guaranteed money by betting on both sides of a match
+                where two different sportsbooks disagree on the outcome.
+                <br></br>
+                <br></br> The service, which peaked at 16 paying monthly
+                subscribers, was powered by my custom Python-driven web scraping
+                and cloud solutions, ensuring timely and accurate arbitrage
+                opportunities updated every minute.
               </ExperienceCardDescription>
             </ExperienceCardDiv>
           </ExperienceCard>

@@ -9,7 +9,6 @@ import {
   useGLTF,
   Html,
   ScreenSpace,
-  Box,
 } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import StaticWebsite from "./StaticWebsite";
@@ -18,6 +17,8 @@ import { KernelSize } from "postprocessing";
 import { useSpring, animated } from "@react-spring/three";
 
 const AnimatedText3D = animated(Text3D);
+
+const AnimatedLinkedInIcon = animated(LinkedInIcon);
 
 export default function Experience() {
   // add a useState to see if the intro has been played
@@ -155,7 +156,7 @@ function Ground() {
 
 const ScrollControl = () => {
   const { camera } = useThree();
-  const minY = -8; // Define minimum Z value
+  const minY = -10; // Define minimum Z value
   const maxY = 1; // Define maximum Z value
   const moveAmount = 0.002; // Adjust move sensitivity
 
@@ -222,7 +223,6 @@ const NavBillboard = () => {
   const thresholdY = -1.5; // Define the threshold Y position
   const [showScreen, setShowScreen] = useState(false);
   const previousY = useRef(camera.position.y);
-  const gltf = useGLTF("/models/linkedin.glb");
   const aboutSectionHeight = -1.5;
   const experienceSectionHeight = -3.5;
   const projectsSectionHeight = -6.5;
@@ -237,6 +237,11 @@ const NavBillboard = () => {
     config: { mass: 1, tension: 180, friction: 12 },
   }));
 
+  const [linkedInSpring, setLinkedInSpring] = useSpring(() => ({
+    rotation: [0, 0.5, 0],
+    config: { mass: 1, tension: 180, friction: 12 },
+  }));
+
   useFrame(() => {
     const deltaY = camera.position.y - previousY.current;
     previousY.current = camera.position.y;
@@ -247,12 +252,15 @@ const NavBillboard = () => {
     // If the camera moves down, rotate the text forward.
     if (deltaY < 0) {
       setSpring({ rotation: [-0.5, 0, 0] });
+      setLinkedInSpring({ rotation: [-0.5, 0.5, 0] });
     } else if (deltaY > 0) {
       // If the camera moves up, rotate the text backward.
       setSpring({ rotation: [0.5, 0, 0] });
+      setLinkedInSpring({ rotation: [0.5, 0.5, 0] });
     } else {
       // Return to the original rotation when movement stops
       setSpring({ rotation: [0, 0, 0] });
+      setLinkedInSpring({ rotation: [0, 0.5, 0] });
     }
 
     if (
@@ -283,7 +291,6 @@ const NavBillboard = () => {
   if (!showScreen) {
     return null;
   }
-  console.log(gltf.scene);
   return (
     <>
       <ScreenSpace depth={1}>
@@ -341,7 +348,12 @@ const NavBillboard = () => {
           <meshBasicMaterial color={"white"} toneMapped={false} />
           {projectsSectionText}
         </AnimatedText3D>
-        <primitive object={gltf.scene} />
+
+        <AnimatedLinkedInIcon
+          position={[-0.2, -0.1, 0]}
+          scale={0.005}
+          {...linkedInSpring}
+        />
       </ScreenSpace>
       <EffectComposer multisampling={8}>
         <Bloom
@@ -360,3 +372,47 @@ const NavBillboard = () => {
     </>
   );
 };
+
+export function LinkedInIcon(props) {
+  const { nodes } = useGLTF("/models/linkedin.glb");
+
+  const handleClick = (event) => {
+    event.stopPropagation();
+    console.log("clicked");
+    window.open("https://www.linkedin.com/in/westonbushyeager/", "_blank");
+  };
+
+  const handlePointerOver = () => {
+    document.body.style.cursor = "pointer";
+  };
+
+  const handlePointerOut = () => {
+    document.body.style.cursor = "auto";
+  };
+
+  return (
+    <group
+      {...props}
+      onClick={handleClick}
+      onPointerOver={handlePointerOver}
+      onPointerOut={handlePointerOut}
+    >
+      <mesh
+        geometry={nodes.Cube.geometry}
+        position={[1.794, 2.483, 0.204]}
+        rotation={[0, -0.351, 0]}
+        scale={[1.679, 1.75, 0.33]}
+      >
+        <meshBasicMaterial color={"white"} toneMapped={false} />
+      </mesh>
+      <mesh
+        geometry={nodes.Curve004.geometry}
+        position={[-0.101, 0.601, -0.404]}
+        rotation={[Math.PI / 2, 0, 0.351]}
+        scale={[26.806, 76.801, 26.806]}
+      >
+        <meshBasicMaterial color={"#0077b5"} toneMapped={false} />
+      </mesh>
+    </group>
+  );
+}

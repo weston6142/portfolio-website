@@ -9,7 +9,7 @@ const BioLinks = styled.a`
 
 const MainDiv = styled.div`
   width: 80vw;
-  height: 220vh;
+  height: 260vh;
   background: transparent;
   display: flex;
 `;
@@ -248,7 +248,7 @@ const StaticWebsite = () => {
           crafting a nifty laser profilometry crawler with PyQt. <br></br>
           <br></br>It was during this chapter, amidst the nuts and bolts of
           robots and code, that I decided to mesh my tech skills with a personal
-          interest in sports betting. Tinkering away, I built the first US
+          interest in sports betting. Tinkering away, I built the first U.S.
           Sports Betting Arbitrage site using Python and cloud computing
           automation. It felt like I was hitting a sweet spot, and soon I had 16
           paying monthly subscribers, each seeking to make smarter bets with my

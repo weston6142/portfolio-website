@@ -15,6 +15,7 @@ import StaticWebsite from "./StaticWebsite";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { KernelSize } from "postprocessing";
 import { useSpring, animated } from "@react-spring/three";
+import theme from "./Theme";
 
 const AnimatedText3D = animated(Text3D);
 
@@ -300,7 +301,7 @@ const NavBillboard = () => {
           position={[-0.2, 0.05, 0]}
           {...spring}
         >
-          <meshBasicMaterial color={"#00b2d2"} toneMapped={false} />
+          <meshBasicMaterial color={theme.colors.primary} toneMapped={false} />
           {"Weston Bushyeager"}
         </AnimatedText3D>
         <AnimatedText3D
@@ -309,7 +310,7 @@ const NavBillboard = () => {
           position={[-0.2, 0.035, 0]}
           {...spring}
         >
-          <meshBasicMaterial color={"#00b2d2"} toneMapped={false} />
+          <meshBasicMaterial color={theme.colors.primary} toneMapped={false} />
           {"Software Engineer"}
         </AnimatedText3D>
         <AnimatedText3D
@@ -318,7 +319,7 @@ const NavBillboard = () => {
           position={[-0.2, 0.02, 0]}
           {...spring}
         >
-          <meshBasicMaterial color={"white"} toneMapped={false} />
+          <meshBasicMaterial color={theme.colors.white} toneMapped={false} />
           {"I build software that solves problems."}
         </AnimatedText3D>
         <AnimatedText3D
@@ -327,7 +328,7 @@ const NavBillboard = () => {
           position={[-0.2, 0.0, 0]}
           {...spring}
         >
-          <meshBasicMaterial color={"white"} toneMapped={false} />
+          <meshBasicMaterial color={theme.colors.white} toneMapped={false} />
           {aboutSectionText}
         </AnimatedText3D>
         <AnimatedText3D
@@ -336,7 +337,7 @@ const NavBillboard = () => {
           position={[-0.2, -0.01, 0]}
           {...spring}
         >
-          <meshBasicMaterial color={"white"} toneMapped={false} />
+          <meshBasicMaterial color={theme.colors.white} toneMapped={false} />
           {experienceSectionText}
         </AnimatedText3D>
         <AnimatedText3D
@@ -345,7 +346,7 @@ const NavBillboard = () => {
           position={[-0.2, -0.02, 0]}
           {...spring}
         >
-          <meshBasicMaterial color={"white"} toneMapped={false} />
+          <meshBasicMaterial color={theme.colors.white} toneMapped={false} />
           {projectsSectionText}
         </AnimatedText3D>
 
@@ -403,7 +404,7 @@ export function LinkedInIcon(props) {
         rotation={[0, -0.351, 0]}
         scale={[1.679, 1.75, 0.33]}
       >
-        <meshBasicMaterial color={"white"} toneMapped={false} />
+        <meshBasicMaterial color={theme.colors.white} toneMapped={false} />
       </mesh>
       <mesh
         geometry={nodes.Curve004.geometry}

@@ -1,7 +1,7 @@
-import React from "react";
 import "./App.css";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import Experience from "./components/Experience";
+import theme from "./components/Theme";
 
 // stylize App div
 const AppDiv = styled.div`
@@ -14,9 +14,11 @@ const AppDiv = styled.div`
 
 function App() {
   return (
-    <AppDiv>
-      <Experience />
-    </AppDiv>
+    <ThemeProvider theme={theme}>
+      <AppDiv>
+        <Experience />
+      </AppDiv>
+    </ThemeProvider>
   );
 }
 

@@ -1,6 +1,7 @@
 import styled, { ThemeProvider } from "styled-components";
 import { useEffect, useState } from "react";
 import theme from "./Theme";
+import { Link } from "react-router-dom";
 
 const BioLinks = styled.a`
   color: ${(props) => props.theme.colors.white};
@@ -13,6 +14,15 @@ const MainDiv = styled.div`
   height: 260vh;
   background: transparent;
   display: flex;
+`;
+
+const StyledLink = styled.a`
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    color: inherit;
+  }
 `;
 
 const LeftDiv = styled.div`
@@ -408,8 +418,10 @@ const StaticWebsite = () => {
             </ExperienceCard>
           </ExperienceSection>
           <MainLink>
-            <MainLinkText>Resume Link</MainLinkText>
-            <MainLinkIcon src="arrow.svg" />
+            <StyledLink href="/resume">
+              <MainLinkText>Resume Link</MainLinkText>
+              <MainLinkIcon src="arrow.svg" />
+            </StyledLink>
           </MainLink>
           <Break />
           <ExperienceSection>

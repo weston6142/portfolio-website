@@ -22,6 +22,9 @@ export default function Experience() {
       setTimeout(() => {
         setShowArrow(true);
       }, 2000);
+      setTimeout(() => {
+        setShowArrow(false);
+      }, 8000);
     }
   });
 
